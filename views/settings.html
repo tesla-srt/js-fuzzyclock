@@ -1,37 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <!--<link rel="stylesheet" href="style.css">-->
 </head>
+
 <body>
-    <div id="settings-content">
+    <div class="container-xl text-center w-100 align-middle" id="settings-content">
+        <!--<button type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>-->
         <!-- Your settings form and controls here -->
-        <h2>Settings</h2>
-        <form id="settings-form">
-            <label for="fuzzyness">Fuzzyness:</label>
-            <input type="range" id="fuzzyness" name="fuzzyness" min="1" max="5" value="1" step="1"><br><br>
-            <button type="submit">Save</button>
-        </form>
+        <div class="row">
+            <h2>Settings</h2>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <form id="settings-form">
+                    <label for="fuzzyness" id="label" class="d-block">Fuzzyness:</label>
+                    <input class="form-range w-100" type="range" id="fuzzyness" name="fuzzyness" min="1" max="5"
+                        value="1" step="1"><span></span><br><br>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+
     </div>
     <script src="js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script>
         const { ipcRenderer } = require('electron');
         const urlParams = new URLSearchParams(window.location.search);
         var fuzzyness = parseInt(urlParams.get('fuzzyness'), 10);
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#fuzzyness').prop('value', fuzzyness)
-            $('#settings-form').on('submit', function(e) {
+            $('#fuzzyness').prev().html('Fuzzyness: ' + fuzzyness)
+           
+            $('#settings-form').on('submit', function (e) {
                 e.preventDefault();
                 const data = $('#fuzzyness').prop('value');
                 // Send the updated settings to the main process
-                ipcRenderer.send('save-settings', data );
+                ipcRenderer.send('save-settings', data);
+            });
+            $('#fuzzyness').on("change mousemove", function () {
+                $(this).prev().html('Fuzzyness: ' + $(this).prop('value'))
             });
         });
     </script>
 </body>
+
 </html>

@@ -20,7 +20,7 @@ function createWindow() {
 
     win.setMenu(null)
     win.loadFile('index.html');
-    // win.webContents.openDevTools(); // Uncomment to open DevTools
+    //win.webContents.openDevTools(); // Uncomment to open DevTools
 }
 
 ipcMain.on('save-settings', (event, data) => {
@@ -42,7 +42,7 @@ app.whenReady().then(() => {
         transparent: true, // Optional: Makes the background transparent
         alwaysOnTop: true, // Optional: Keeps the widget on top of other windows
         webPreferences: {
-            preload: path.join(__dirname, 'preloadMain.js'),
+            //preload: path.join(__dirname, '/views/js/preloadMain.js'),
             nodeIntegration: true,
             contextIsolation: false
         }
@@ -50,11 +50,13 @@ app.whenReady().then(() => {
 
     win.setMenu(null)
     win.loadFile(path.join(__dirname, 'views/index.html'));
-    // win.webContents.openDevTools(); // Uncomment to open DevTools
+    
+    //win.webContents.openDevTools(); // Uncomment to open DevTools
+    
     settingsWindow = new BrowserWindow({
         width: 400,
         height: 300,
-        preload: path.join(__dirname, 'preloadSettings.js'),
+        //preload: path.join(__dirname, '/views/js/preloadSettings.js'),
         parent: win,
         show: false,
         //frame: false, // This line makes the window frameless
@@ -67,7 +69,8 @@ app.whenReady().then(() => {
     settingsWindow.loadURL(`file://${__dirname}/views/settings.html?fuzzyness=${fuzzyness}`);
     //settingsWindow.webContents.openDevTools(); //
 
-    settingsWindow.on('close', function () {
+    settingsWindow.on('close', function (e) {
+        e.preventDefault()
         settingsWindow.hide()
     });
 
@@ -88,6 +91,9 @@ app.whenReady().then(() => {
         else win.show();
     });
 
+    tray.on('middle-click', () => {
+        app.quit()
+    });
 })
 
 app.on('window-all-closed', () => {

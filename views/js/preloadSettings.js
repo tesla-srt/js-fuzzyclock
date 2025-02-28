@@ -2,20 +2,9 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    dragWindow: () => ipcRenderer.send('drag-window'),
-	ping: () => ipcRenderer.send('ping')
+    dragWindow: () => ipcRenderer.send('drag-window')
 });
 
-
-ipcRenderer.on('port', e => {
-  // port received, make it globally available.
-  window.electronMessagePort = e.ports[0]
-
-  window.electronMessagePort.onmessage = messageEvent => {
-    // handle message
-    console.log(messageEvent)
-  }
-})
 
 window.addEventListener('DOMContentLoaded', () => {
   // Access Node.js modules safely through window.api.someMethod(); calls
