@@ -4,8 +4,7 @@
   "description": "a fuzzy clock widget",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js",
-    "test": "npm run test"
+    "start": "npx electron ."
   },
   "author": "Nicholas Delfico",
   "license": "ISC",
