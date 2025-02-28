@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron');
 var fuzzyness = 1
 
 function updateTime(a) {                //FN: updateTime(fuzzyness) Interact with DOM and update the time label 
-  ipcRenderer.send('ping');
+  //ipcRenderer.send('ping');
   var label = document.getElementById('time');
   var time = timeString(a);
   label.innerText = time;
@@ -268,7 +268,7 @@ function timeString(fuzzyness) {        //FN: timeString()
 
 
 window.onload = function (e) {
-  setInterval(() => { updateTime(fuzzyness); }, 180000);
+  setInterval(() => { updateTime(fuzzyness); }, 59999);
   updateTime(fuzzyness)
 }
 

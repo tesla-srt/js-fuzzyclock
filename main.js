@@ -30,7 +30,7 @@ ipcMain.on('save-settings', (event, data) => {
 })
 
 ipcMain.on('ping', (event, data) => {
-    console.log('tick')
+    //console.log('tick')
 })
 
 
