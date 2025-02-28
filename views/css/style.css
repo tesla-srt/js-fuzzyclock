@@ -1,0 +1,22 @@
+   body {
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        color: white;
+        font-family: sans-serif;
+        margin: 0;
+        padding: 20px;
+        user-select: none; /* Prevent text selection while dragging */
+        -webkit-app-region: drag; /* Enable dragging the window */
+    }
+    
+    body:hover {
+        cursor: grab;
+    }
+    
+    #widget-content {
+        text-align: center;
+    }
+    
+    /* Optional: Style for buttons or interactive elements to prevent dragging */
+    button {
+        -webkit-app-region: no-drag;
+    }

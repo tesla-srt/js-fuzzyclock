@@ -1,0 +1,15 @@
+{
+  "name": "js-fuzzyclock",
+  "version": "0.0.1",
+  "description": "a fuzzy clock widget",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "npm run test"
+  },
+  "author": "Nicholas Delfico",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^34.3.0"
+  }
+}
