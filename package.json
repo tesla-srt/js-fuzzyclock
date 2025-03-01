@@ -2,11 +2,12 @@
   "name": "js-fuzzyclock",
   "version": "1.0.0",
   "description": "a fuzzy clock widget",
+  "homepage": "https://github.com/tesla-srt/js-fuzzyclock#readme",
   "main": "main.js",
   "scripts": {
     "start": "npx electron ."
   },
-  "author": "Nicholas Delfico",
+  "author": "Nicholas Delfico (https://nickatnite.xyz)",
   "license": "ISC",
   "devDependencies": {
     "electron": "^34.3.0"
