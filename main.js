@@ -77,7 +77,7 @@ app.whenReady().then(() => {
     });
 
     //FN: Tray initialization
-    const tray = new Tray(path.join(__dirname, '_res/clock-regular.png')); // Replace with your icon path
+    const tray = new Tray(path.join(__dirname, 'assets/clock-regular.png')); // Replace with your icon path
 
     const contextMenu = Menu.buildFromTemplate([
         { label: 'Configure', click: () => settingsWindow.show() },

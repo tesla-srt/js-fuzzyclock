@@ -2,6 +2,12 @@
 
 A simple Electron application that displays a fuzzy clock. 🕒✨
 
+
+![](assets/20250228_231322_screen0.png)
+
+
+![](assets/20250228_231417_screen1.gif)
+
 ## Features
 
 - **Fuzzy Clock**: Displays the current time with a fuzzy effect.
@@ -12,26 +18,33 @@ A simple Electron application that displays a fuzzy clock. 🕒✨
 ## Installation
 
 1. Clone this repository:
+
 ```sh
 git clone https://github.com/tesla-srt/js-fuzzyclock.git
 ```
+
 2. Navigate to the project directory:
+
 ```sh
 cd js-fuzzyclock
 ```
+
 3. Install dependencies:
+
 ```sh
 npm install
 ```
 
 ## Running the application
-Running the Application
+
 To run the application, use the following command:
+
 ```
 npm start
 ```
 
 ### TODO
+
 - **Configuration Saving**: 🔄 Implement functionality to save other configurations such as font color and family. (High Priority)
 - **Localization**: 🔄 Implement functionality to save other configurations such as font color and family. (High Priority)
 - **Style Enhancements**: 🔄 Make it cleaner and more customizable. (High Priority)
