@@ -24,7 +24,6 @@ function createWindow() {
 }
 
 ipcMain.on('save-settings', (event, data) => {
-    //console.log(data)
     fuzzyness = data
     win.webContents.postMessage('pong', fuzzyness)
 })
@@ -38,9 +37,12 @@ app.whenReady().then(() => {
     win = new BrowserWindow({
         width: 275,
         height: 70,
+        useContentSize: true,
         frame: false, // This line makes the window frameless
         transparent: true, // Optional: Makes the background transparent
         alwaysOnTop: true, // Optional: Keeps the widget on top of other windows
+        maximizable: false,
+        resizable: false,
         webPreferences: {
             //preload: path.join(__dirname, '/views/js/preloadMain.js'),
             nodeIntegration: true,
