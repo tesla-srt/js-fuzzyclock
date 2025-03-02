@@ -52,7 +52,6 @@ app.whenReady().then(() => {
 
     win.setMenu(null)
     win.loadFile(path.join(__dirname, 'views/index.html'));
-    
     //win.webContents.openDevTools(); // Uncomment to open DevTools
     
     settingsWindow = new BrowserWindow({

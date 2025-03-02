@@ -8,6 +8,8 @@ function updateTime(a) {                //FN: updateTime(fuzzyness) Interact wit
   label.innerText = time;
 }
 
+// Ported from https://github.com/KDE/kdeplasma-addons/blob/master/applets/fuzzy-clock/package/contents/ui/main.qml
+// KDE Plasma FuzzyClock
 function timeString(fuzzyness) {        //FN: timeString()
 
   var hourNames = [
@@ -221,10 +223,7 @@ function timeString(fuzzyness) {        //FN: timeString()
         sector = (minutes - 3) / 5 + 1
       }
     } else {
-      // this formula has been determined by carefully filling a spreadsheet
-      // and looking at the numbers :)
       sector = ((minutes + 7) / 15 * 3)
-      // now round down to the nearest three
       sector = (Math.floor(sector / 3) * 3)
     }
 
