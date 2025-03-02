@@ -1,10 +1,10 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer } = require('electron')
 let fuzzyness = 1
 
 const updateTime = ((a) => {                //FN: updateTime(fuzzyness) Interact with DOM and update the time label 
-  let label = document.getElementById('time');
-  let time = timeString(a);
-  label.innerText = time;
+  let label = document.getElementById('time')
+  let time = timeString(a)
+  label.innerText = time
 })
 
 // Ported from https://github.com/KDE/kdeplasma-addons/blob/master/applets/fuzzy-clock/package/contents/ui/FuzzyClock.qml
@@ -178,8 +178,8 @@ const timeString = ((fuzzyness) => {        //FN: timeString()
       "Quarter to one",
       "Ten to one",
       "Five to one",
-    ],
-  ];
+    ]
+  ]
 
   let halflingTime = [
     "Sleep",
@@ -190,7 +190,7 @@ const timeString = ((fuzzyness) => {        //FN: timeString()
     "Afternoon tea",
     "Dinner",
     "Supper",
-  ];
+  ]
 
   let dayTime = [
     "Night",
@@ -201,16 +201,16 @@ const timeString = ((fuzzyness) => {        //FN: timeString()
     "Afternoon",
     "Evening",
     "Late evening",
-  ];
+  ]
 
-  let weekTime = ["Start of week", "Middle of week", "End of week", "Weekend!"];
+  let weekTime = ["Start of week", "Middle of week", "End of week", "Weekend!"]
 
 
   fuzzyness = (fuzzyness < 1 ? 1 : fuzzyness)
   fuzzyness = (fuzzyness > 5 ? 5 : fuzzyness)
-  let d = new Date();
-  let hours = d.getHours();
-  let minutes = d.getMinutes();
+  let d = new Date()
+  let hours = d.getHours()
+  let minutes = d.getMinutes()
 
   if (fuzzyness == 1 || fuzzyness == 2) {
     let sector = 0
@@ -231,7 +231,7 @@ const timeString = ((fuzzyness) => {        //FN: timeString()
       realHour = 12 - (hours % 12 + 1)
     }
 
-    sector = Math.floor(sector);
+    sector = Math.floor(sector)
     if (sector == 12) {
       realHour += 1
       if (Math.floor(realHour) >= hourNames.length) {
@@ -242,30 +242,30 @@ const timeString = ((fuzzyness) => {        //FN: timeString()
 
     return hourNames[Math.floor(realHour)][sector]
   } else if (fuzzyness == 3) {
-    return halflingTime[Math.floor(hours / 3)];
+    return halflingTime[Math.floor(hours / 3)]
   } else if (fuzzyness == 4) {
-    return dayTime[Math.floor(hours / 3)];
+    return dayTime[Math.floor(hours / 3)]
   } else {
-    let dow = d.getDay();
+    let dow = d.getDay()
 
-    let weekTimeId;
+    let weekTimeId
     if (dow == 1) {
-      weekTimeId = 0;
+      weekTimeId = 0
     } else if (dow >= 2 && dow <= 4) {
-      weekTimeId = 1;
+      weekTimeId = 1
     } else if (dow == 5) {
-      weekTimeId = 2;
+      weekTimeId = 2
     } else {
-      weekTimeId = 3;
+      weekTimeId = 3
     }
 
-    return weekTime[weekTimeId];
+    return weekTime[weekTimeId]
   }
 })
 
 
 window.onload = function (e) {
-  setInterval(() => { updateTime(fuzzyness); }, 59999);
+  setInterval(() => { updateTime(fuzzyness) }, 59999)
   updateTime(fuzzyness)
 }
 
@@ -274,10 +274,10 @@ ipcRenderer.on('pong', (event, message) => {
     fuzzyness = message
     updateTime(fuzzyness)
   }
-});
+})
 
 document.addEventListener('mousedown', (e) => {
   if (e.target.tagName !== 'BUTTON') {
-    ipcRenderer.send('drag-window');
+    ipcRenderer.send('drag-window')
   }
-});
+})
