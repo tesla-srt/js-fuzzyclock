@@ -11,7 +11,6 @@ function updateTime(a) {                //FN: updateTime(fuzzyness) Interact wit
 // Ported from https://github.com/KDE/kdeplasma-addons/blob/master/applets/fuzzy-clock/package/contents/ui/main.qml
 // KDE Plasma FuzzyClock
 function timeString(fuzzyness) {        //FN: timeString()
-
   var hourNames = [
     [
       "One o’clock",
