@@ -1,17 +1,16 @@
 const { ipcRenderer } = require('electron');
-var fuzzyness = 1
+let fuzzyness = 1
 
-function updateTime(a) {                //FN: updateTime(fuzzyness) Interact with DOM and update the time label 
-  //ipcRenderer.send('ping');
-  var label = document.getElementById('time');
-  var time = timeString(a);
+const updateTime = ((a) => {                //FN: updateTime(fuzzyness) Interact with DOM and update the time label 
+  let label = document.getElementById('time');
+  let time = timeString(a);
   label.innerText = time;
-}
+})
 
-// Ported from https://github.com/KDE/kdeplasma-addons/blob/master/applets/fuzzy-clock/package/contents/ui/main.qml
+// Ported from https://github.com/KDE/kdeplasma-addons/blob/master/applets/fuzzy-clock/package/contents/ui/FuzzyClock.qml
 // KDE Plasma FuzzyClock
-function timeString(fuzzyness) {        //FN: timeString()
-  var hourNames = [
+const timeString = ((fuzzyness) => {        //FN: timeString()
+  let hourNames = [
     [
       "One o’clock",
       "Five past one",
@@ -182,7 +181,7 @@ function timeString(fuzzyness) {        //FN: timeString()
     ],
   ];
 
-  var halflingTime = [
+  let halflingTime = [
     "Sleep",
     "Breakfast",
     "Second Breakfast",
@@ -193,7 +192,7 @@ function timeString(fuzzyness) {        //FN: timeString()
     "Supper",
   ];
 
-  var dayTime = [
+  let dayTime = [
     "Night",
     "Early morning",
     "Morning",
@@ -204,18 +203,18 @@ function timeString(fuzzyness) {        //FN: timeString()
     "Late evening",
   ];
 
-  var weekTime = ["Start of week", "Middle of week", "End of week", "Weekend!"];
+  let weekTime = ["Start of week", "Middle of week", "End of week", "Weekend!"];
 
 
   fuzzyness = (fuzzyness < 1 ? 1 : fuzzyness)
   fuzzyness = (fuzzyness > 5 ? 5 : fuzzyness)
-  var d = new Date();
-  var hours = d.getHours();
-  var minutes = d.getMinutes();
+  let d = new Date();
+  let hours = d.getHours();
+  let minutes = d.getMinutes();
 
   if (fuzzyness == 1 || fuzzyness == 2) {
-    var sector = 0
-    var realHour = 0
+    let sector = 0
+    let realHour = 0
 
     if (fuzzyness == 1) {
       if (minutes > 2) {
@@ -247,9 +246,9 @@ function timeString(fuzzyness) {        //FN: timeString()
   } else if (fuzzyness == 4) {
     return dayTime[Math.floor(hours / 3)];
   } else {
-    var dow = d.getDay();
+    let dow = d.getDay();
 
-    var weekTimeId;
+    let weekTimeId;
     if (dow == 1) {
       weekTimeId = 0;
     } else if (dow >= 2 && dow <= 4) {
@@ -262,7 +261,7 @@ function timeString(fuzzyness) {        //FN: timeString()
 
     return weekTime[weekTimeId];
   }
-}
+})
 
 
 window.onload = function (e) {
