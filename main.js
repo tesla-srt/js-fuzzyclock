@@ -3,26 +3,6 @@ const path = require('path');
 var fuzzyness = 1
 let win, settingsWindow
 
-function createWindow() {
-    win = new BrowserWindow({
-        width: 275,
-        height: 70,
-        frame: false, // This line makes the window frameless
-        transparent: true, // Optional: Makes the background transparent
-        alwaysOnTop: true, // Optional: Keeps the widget on top of other windows
-        title: "fuzzytime.js",
-        webPreferences: {
-            preload: path.join(__dirname, 'preloadMain.js'),
-            nodeIntegration: true,
-            contextIsolation: false
-        }
-    });
-
-    win.setMenu(null)
-    win.loadFile('index.html');
-    //win.webContents.openDevTools(); // Uncomment to open DevTools
-}
-
 ipcMain.on('save-settings', (event, data) => {
     fuzzyness = data
     win.webContents.postMessage('pong', fuzzyness)
@@ -31,7 +11,6 @@ ipcMain.on('save-settings', (event, data) => {
 ipcMain.on('ping', (event, data) => {
     //console.log('tick')
 })
-
 
 app.whenReady().then(() => {
     win = new BrowserWindow({
@@ -49,9 +28,10 @@ app.whenReady().then(() => {
             contextIsolation: false
         }
     });
-
+    win.setVisibleOnAllWorkspaces(true)
     win.setMenu(null)
     win.loadFile(path.join(__dirname, 'views/index.html'));
+    
     //win.webContents.openDevTools(); // Uncomment to open DevTools
     
     settingsWindow = new BrowserWindow({
@@ -97,15 +77,8 @@ app.whenReady().then(() => {
     });
 })
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
-
-app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow();
-    }
-});
-
+// app.on('window-all-closed', () => {
+//     if (process.platform !== 'darwin') {
+//         app.quit();
+//     }
+// });
