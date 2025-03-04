@@ -9,10 +9,6 @@ body {
   -webkit-app-region: drag; /* Enable dragging the window */
 }
 
-body:hover {
-  cursor: grab;
-}
-
 #widget-content {
   text-align: center;
   vertical-align: middle;
