@@ -1,5 +1,5 @@
 body {
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.35); /* Semi-transparent background */
   color: white;
   font-family: sans-serif;
   margin: 0;
@@ -8,6 +8,10 @@ body {
   overflow: hidden;
   user-select: none; /* Prevent text selection while dragging */
   -webkit-app-region: drag; /* Enable dragging the window */
+}
+
+body:hover {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #widget-content {

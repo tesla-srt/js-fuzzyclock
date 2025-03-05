@@ -35,20 +35,20 @@
     <script>
         const { ipcRenderer } = require('electron');
         const urlParams = new URLSearchParams(window.location.search);
-        var fuzzyness = parseInt(urlParams.get('fuzzyness'), 10);
-
+        let fuzzyness = parseInt(urlParams.get('fuzzyness'), 10);
+        let element = $('#fuzzyness')
         $(document).ready(function () {
-            $('#fuzzyness').prop('value', fuzzyness)
-            $('#fuzzyness').prev().html('Fuzzyness: ' + fuzzyness)
+            element.prop('value', fuzzyness)
+            element.prev().html('Fuzzyness: ' + fuzzyness)
            
             $('#settings-form').on('submit', function (e) {
                 e.preventDefault();
-                const data = parseInt($('#fuzzyness').prop('value'), 10);
+                const data = parseInt(element.prop('value'), 10);
                 let r = {fuzzyness: data, fontSize: 12}
                 // Send the updated settings to the main process
                 ipcRenderer.send('save-settings', r);
             });
-            $('#fuzzyness').on("change mousemove", function () {
+            element.on("change mousemove", function () {
                 $(this).prev().html('Fuzzyness: ' + $(this).prop('value'))
             });
         });
