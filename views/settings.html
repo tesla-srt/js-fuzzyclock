@@ -43,9 +43,10 @@
            
             $('#settings-form').on('submit', function (e) {
                 e.preventDefault();
-                const data = $('#fuzzyness').prop('value');
+                const data = parseInt($('#fuzzyness').prop('value'), 10);
+                let r = {fuzzyness: data, fontSize: 12}
                 // Send the updated settings to the main process
-                ipcRenderer.send('save-settings', data);
+                ipcRenderer.send('save-settings', r);
             });
             $('#fuzzyness').on("change mousemove", function () {
                 $(this).prev().html('Fuzzyness: ' + $(this).prop('value'))

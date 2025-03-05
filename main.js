@@ -1,13 +1,19 @@
-const { app, BrowserWindow, ipcMain, Tray, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Tray, Menu, contextBridge } = require('electron');
 const path = require('path');
 
+const state = {
+    fuzzyness: 1,
+    fontSize: 12
+}
 var fuzzyness = 1
 var win, settingsWindow
 
 ipcMain.on('save-settings', (event, data) => {
-    fuzzyness = data
-    win.webContents.postMessage('pong', fuzzyness)
+    state.fuzzyness = data.fuzzyness
+    win.webContents.postMessage('pong', state)
 })
+
+ipcMain.on('get-settings', (event, data) => event.reply(state))
 
 ipcMain.on('ping', (event, data) => {
     //console.log('tick')
@@ -51,7 +57,7 @@ app.whenReady().then(() => {
         }
     });
     settingsWindow.setMenu(null)
-    settingsWindow.loadURL(`file://${__dirname}/views/settings.html?fuzzyness=${fuzzyness}`)
+    settingsWindow.loadURL(`file://${__dirname}/views/settings.html?fuzzyness=${state.fuzzyness}`)
     settingsWindow.webContents.openDevTools(); //
 
     settingsWindow.on('close', function (e) {

@@ -4,8 +4,11 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('electron', {
   dragWindow: () => ipcRenderer.send('drag-window'),
   showSettings: () => ipcRenderer.send('show-settings'),
+  getSettings: () => ipcRenderer.send('get-settings'),
   onPong: (callback) => ipcRenderer.on('pong', (e, ...args) => callback(args)),
   timeString: (fuzzyness) => {
+    // Ported from https://github.com/KDE/kdeplasma-addons/blob/master/applets/fuzzy-clock/package/contents/ui/FuzzyClock.qml
+    // KDE Plasma FuzzyClock
     let hourNames = [
       [
         "One o’clock",
@@ -260,7 +263,7 @@ contextBridge.exposeInMainWorld('electron', {
   },
   state: {
     fuzzyness: 1,
-    fontSize: '12px'
+    fontSize: 12
   }
 });
 
@@ -278,9 +281,3 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 });
-window.addEventListener('mousedown', (e) => {
-  if (e.detail == 2) {
-    // do stuff here
-    ipcRenderer.send('show-settings')
-  }
-})
