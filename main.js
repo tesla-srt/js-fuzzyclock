@@ -1,5 +1,29 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu, globalShortcut } = require('electron');
 const path = require('path');
+const fs = require('fs');
+
+// Add error logging
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+});
+
+// Try to create cache directory explicitly
+const userDataPath = app.getPath('userData');
+const cachePath = path.join(userDataPath, 'cache');
+
+try {
+    if (!fs.existsSync(cachePath)) {
+        fs.mkdirSync(cachePath, { recursive: true });
+    }
+    console.log('Cache directory created/verified at:', cachePath);
+} catch (error) {
+    console.error('Failed to create cache directory:', error);
+}
+
+// Set cache location before app is ready
+app.commandLine.appendSwitch('disk-cache-dir', cachePath);
+app.commandLine.appendSwitch('disable-gpu-cache');
+app.commandLine.appendSwitch('disable-software-rasterizer');
 
 let win;
 let settingsWindow;
