@@ -9,11 +9,14 @@
   
   <div id="widget-content">
     <h2 id="time" style="display:inline"></h2>
+    <button id="settingsBtn" style="position: absolute; top: 5px; right: 5px; padding: 2px; font-size: 10px;">⚙️</button>
   </div>
   <script src="js/jquery.min.js"></script>
   <script src="js/renderer.js"></script>
   <script>
-    
+    console.log('Index page loaded');
+    // Check if window.electron is available
+    console.log('window.electron available:', !!window.electron);
   </script>
 </body>
 </html>
