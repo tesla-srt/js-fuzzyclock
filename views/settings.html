@@ -1,58 +1,299 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!--<link rel="stylesheet" href="style.css">-->
+    <style>
+        :root {
+            --primary: #007AFF;
+            --primary-light: #47a0ff;
+            --bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --shadow: 0 8px 30px rgba(0,0,0,0.12);
+            --border-radius: 16px;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .settings-container {
+            max-width: 500px;
+            margin: 20px auto;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            animation: containerIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes containerIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .settings-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1.8rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: headerIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
+        }
+
+        @keyframes headerIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .setting-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 2px solid transparent;
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: cardIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .setting-card:nth-child(1) { animation-delay: 0.4s; }
+        .setting-card:nth-child(2) { animation-delay: 0.5s; }
+        .setting-card:nth-child(3) { animation-delay: 0.6s; }
+        .setting-card:nth-child(4) { animation-delay: 0.7s; }
+
+        @keyframes cardIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            60% {
+                transform: translateX(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .setting-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-light);
+            box-shadow: 0 8px 30px rgba(0,122,255,0.1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .form-range {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            -webkit-appearance: none;
+            background: #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .form-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 0 0 1px var(--primary);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .form-range::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .form-select:hover {
+            border-color: var(--primary-light);
+        }
+
+        .form-control-color {
+            width: 100% !important;
+            height: 50px;
+            padding: 5px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .value-display {
+            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+            animation-delay: 1s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            display: block;
+            opacity: 0;
+            animation: labelIn 0.4s ease forwards;
+        }
+
+        @keyframes labelIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Ensure animations play on window focus */
+        .animate-in {
+            animation: none;
+            opacity: 0;
+        }
+
+        .animate-in.show {
+            animation: cardIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="container-xl text-center w-100 align-middle" id="settings-content">
-        <!--<button type="button" class="close" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>-->
-        <!-- Your settings form and controls here -->
-        <div class="row">
-            <h2>Settings</h2>
-        </div>
-        <div class="row">
-            <div class="form-group">
-                <form id="settings-form">
-                    <label for="fuzzyness" id="label" class="d-block">Fuzzyness:</label>
-                    <input class="form-range w-100" type="range" id="fuzzyness" name="fuzzyness" min="1" max="5"
-                        value="1" step="1"><span></span><br><br>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Save</button>
-                </form>
+    <div class="settings-container">
+        <h2 class="settings-header">FuzzyClock Settings</h2>
+        <form id="settings-form">
+            <div class="setting-card">
+                <div class="form-group">
+                    <label for="fuzzyness">Fuzzyness Level</label>
+                    <input type="range" class="form-range" id="fuzzyness" min="1" max="5" step="1">
+                    <div class="value-display" id="fuzzyness-value"></div>
+                </div>
             </div>
-        </div>
 
+            <div class="setting-card">
+                <div class="form-group">
+                    <label for="fontColor">Font Color</label>
+                    <input type="color" class="form-control form-control-color" id="fontColor">
+                </div>
+            </div>
+
+            <div class="setting-card">
+                <div class="form-group">
+                    <label for="fontFamily">Font Family</label>
+                    <select class="form-select" id="fontFamily">
+                        <option value="system-ui">System Default</option>
+                        <option value="sans-serif">Sans-serif</option>
+                        <option value="serif">Serif</option>
+                        <option value="monospace">Monospace</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="setting-card">
+                <div class="form-group">
+                    <label for="bgTransparency">Background Transparency</label>
+                    <input type="range" class="form-range" id="bgTransparency" min="0" max="1" step="0.05">
+                    <div class="value-display" id="transparency-value"></div>
+                </div>
+            </div>
+        </form>
     </div>
+
     <script src="js/jquery.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script>
         const { ipcRenderer } = require('electron');
-        const urlParams = new URLSearchParams(window.location.search);
-        let fuzzyness = parseInt(urlParams.get('fuzzyness'), 10);
-        let element = $('#fuzzyness')
-        $(document).ready(function () {
-            element.prop('value', fuzzyness)
-            element.prev().html('Fuzzyness: ' + fuzzyness)
-           
-            $('#settings-form').on('submit', function (e) {
-                e.preventDefault();
-                const data = parseInt(element.prop('value'), 10);
-                let r = {fuzzyness: data, fontSize: 12}
-                // Send the updated settings to the main process
-                ipcRenderer.send('save-settings', r);
+        
+        function resetAnimations() {
+            // Reset all animations by removing and re-adding elements
+            const container = document.querySelector('.settings-container');
+            const clone = container.cloneNode(true);
+            container.parentNode.replaceChild(clone, container);
+            
+            // Re-attach event listeners
+            setupEventListeners();
+        }
+
+        function setupEventListeners() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            $('#fuzzyness').val(urlParams.get('fuzzyness') || 1);
+            $('#fontColor').val(urlParams.get('fontColor') || '#ffffff');
+            $('#fontFamily').val(urlParams.get('fontFamily') || 'system-ui');
+            $('#bgTransparency').val(urlParams.get('bgTransparency') || 0.35);
+
+            updateDisplayValues();
+
+            const inputs = ['fuzzyness', 'fontColor', 'fontFamily', 'bgTransparency'];
+            inputs.forEach(id => {
+                $(`#${id}`).on('input change', function() {
+                    updateDisplayValues();
+                    saveSettings();
+                });
             });
-            element.on("change mousemove", function () {
-                $(this).prev().html('Fuzzyness: ' + $(this).prop('value'))
-            });
-        });
+        }
+
+        // Reset animations when window gains focus
+        window.addEventListener('focus', resetAnimations);
+
+        // Initial setup
+        $(document).ready(setupEventListeners);
+
+        function updateDisplayValues() {
+            $('#fuzzyness-value').text(`Fuzzyness Level: ${$('#fuzzyness').val()}`);
+            $('#transparency-value').text(`Transparency: ${Math.round($('#bgTransparency').val() * 100)}%`);
+        }
+
+        function saveSettings() {
+            const settings = {
+                fuzzyness: parseInt($('#fuzzyness').val(), 10),
+                fontColor: $('#fontColor').val(),
+                fontFamily: $('#fontFamily').val(),
+                bgTransparency: parseFloat($('#bgTransparency').val()),
+                fontSize: 12
+            };
+            
+            ipcRenderer.send('save-settings', settings);
+        }
     </script>
 </body>
-
 </html>
