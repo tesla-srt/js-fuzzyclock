@@ -46,7 +46,7 @@ npm start
 ### TODO
 
 - **Configuration Saving**: 🔄 Implement functionality to save other configurations such as font color and family. (High Priority)
-- **Localization**: 🔄 Implement functionality to save other configurations such as font color and family. (High Priority)
+- **Localization**: 🔄 Implement functionality to support the display of other languages (i18n). (High Priority)
 - **Style Enhancements**: 🔄 Make it cleaner and more customizable. (High Priority)
 - **Font Color and Family**: 🔧 Allow users to change the font color and family from the settings. (Medium Priority)
 - **Background Transparency**: 👀 Add functionality to toggle background transparency. (Low Priority)
