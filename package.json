@@ -1,6 +1,6 @@
 {
   "name": "js-fuzzyclock",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a fuzzy clock widget",
   "homepage": "https://github.com/tesla-srt/js-fuzzyclock#readme",
   "main": "main.js",

@@ -29,7 +29,7 @@ app.commandLine.appendSwitch('disable-software-rasterizer');
 
 async function initializeStore() {
     const Store = (await import('electron-store')).default;
-    
+
     const schema = {
         fuzzyness: {
             type: 'number',
@@ -132,13 +132,7 @@ async function createWindow() {
     win.loadFile(path.join(__dirname, 'views/index.html'));
 
     settingsWindow.setMenu(null);
-    settingsWindow.loadURL(
-        `file://${__dirname}/views/settings.html?` +
-        `fuzzyness=${state.fuzzyness}&` +
-        `fontColor=${encodeURIComponent(state.fontColor)}&` +
-        `fontFamily=${encodeURIComponent(state.fontFamily)}&` +
-        `bgTransparency=${state.bgTransparency}`
-    );
+    loadSettingsWindow()
 
     settingsWindow.webContents.on('did-finish-load', () => {
         console.log('Settings window content loaded');
@@ -154,6 +148,7 @@ async function createWindow() {
     });
 
     settingsWindow.on('focus', () => {
+        loadSettingsWindow()
         console.log('Settings window focused');
     });
 
@@ -169,10 +164,12 @@ async function createWindow() {
     const contextMenu = Menu.buildFromTemplate([
         { label: 'Configure', click: () => settingsWindow.show() },
         { type: 'separator' },
-        { label: 'Exit', click: () => {
-            app.isQuitting = true;
-            app.quit();
-        }}
+        {
+            label: 'Exit', click: () => {
+                app.isQuitting = true;
+                app.quit();
+            }
+        }
     ]);
 
     tray.setContextMenu(contextMenu);
@@ -186,13 +183,8 @@ async function createWindow() {
         console.log('Show settings requested from renderer');
         if (settingsWindow) {
             //Reload the state to the settings window
-            settingsWindow.loadURL(
-                `file://${__dirname}/views/settings.html?` +
-                `fuzzyness=${state.fuzzyness}&` +
-                `fontColor=${encodeURIComponent(state.fontColor)}&` +
-                `fontFamily=${encodeURIComponent(state.fontFamily)}&` +
-                `bgTransparency=${state.bgTransparency}`
-            );
+            loadSettingsWindow()
+
             try {
                 settingsWindow.center();
                 settingsWindow.show();
@@ -223,6 +215,16 @@ async function createWindow() {
         app.isQuitting = true;
         app.quit();
     });
+}
+
+function loadSettingsWindow() {
+    settingsWindow.loadURL(
+        `file://${__dirname}/views/settings.html?` +
+        `fuzzyness=${state.fuzzyness}&` +
+        `fontColor=${encodeURIComponent(state.fontColor)}&` +
+        `fontFamily=${encodeURIComponent(state.fontFamily)}&` +
+        `bgTransparency=${state.bgTransparency}`
+    );
 }
 
 app.whenReady().then(createWindow);
