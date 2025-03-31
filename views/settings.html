@@ -24,6 +24,10 @@
             overflow-x: hidden;
         }
 
+        .no-select {
+            user-select: none;
+        }
+
         .settings-container {
             max-width: 500px;
             margin: 20px auto;
@@ -110,6 +114,7 @@
             width: 100%;
             height: 6px;
             border-radius: 3px;
+            appearance: none;
             -webkit-appearance: none;
             background: #e0e0e0;
             transition: all 0.3s ease;
@@ -199,26 +204,26 @@
 </head>
 <body>
     <div class="settings-container">
-        <h2 class="settings-header">FuzzyClock Settings</h2>
+        <h2 class="settings-header no-select">FuzzyClock Settings</h2>
         <form id="settings-form">
             <div class="setting-card">
                 <div class="form-group">
-                    <label for="fuzzyness">Fuzzyness Level</label>
+                    <label class="no-select" for="fuzzyness">Fuzzyness Level</label>
                     <input type="range" class="form-range" id="fuzzyness" min="1" max="5" step="1">
-                    <div class="value-display" id="fuzzyness-value"></div>
+                    <div class="value-display no-select" id="fuzzyness-value"></div>
                 </div>
             </div>
 
             <div class="setting-card">
                 <div class="form-group">
-                    <label for="fontColor">Font Color</label>
+                    <label class="no-select" for="fontColor">Font Color</label>
                     <input type="color" class="form-control form-control-color" id="fontColor">
                 </div>
             </div>
 
             <div class="setting-card">
                 <div class="form-group">
-                    <label for="fontFamily">Font Family</label>
+                    <label class="no-select" for="fontFamily">Font Family</label>
                     <select class="form-select" id="fontFamily">
                         <option value="system-ui">System Default</option>
                         <option value="sans-serif">Sans-serif</option>
@@ -230,9 +235,9 @@
 
             <div class="setting-card">
                 <div class="form-group">
-                    <label for="bgTransparency">Background Transparency</label>
+                    <label class="no-select" for="bgTransparency">Background Transparency</label>
                     <input type="range" class="form-range" id="bgTransparency" min="0" max="1" step="0.05">
-                    <div class="value-display" id="transparency-value"></div>
+                    <div class="value-display no-select" id="transparency-value"></div>
                 </div>
             </div>
         </form>

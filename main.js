@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu, globalShortcut } = require('electron');
 const path = require('path');
 const fs = require('fs');
+//Lets define our globals
+let win, settingsWindow, store, state, tray
 
 // Add error logging
 process.on('uncaughtException', (error) => {
@@ -24,12 +26,6 @@ try {
 app.commandLine.appendSwitch('disk-cache-dir', cachePath);
 app.commandLine.appendSwitch('disable-gpu-cache');
 app.commandLine.appendSwitch('disable-software-rasterizer');
-
-let win;
-let settingsWindow;
-let store;
-let state;
-let tray;
 
 async function initializeStore() {
     const Store = (await import('electron-store')).default;
@@ -189,6 +185,14 @@ async function createWindow() {
     ipcMain.on('show-settings', () => {
         console.log('Show settings requested from renderer');
         if (settingsWindow) {
+            //Reload the state to the settings window
+            settingsWindow.loadURL(
+                `file://${__dirname}/views/settings.html?` +
+                `fuzzyness=${state.fuzzyness}&` +
+                `fontColor=${encodeURIComponent(state.fontColor)}&` +
+                `fontFamily=${encodeURIComponent(state.fontFamily)}&` +
+                `bgTransparency=${state.bgTransparency}`
+            );
             try {
                 settingsWindow.center();
                 settingsWindow.show();
@@ -208,7 +212,7 @@ async function createWindow() {
         for (const [key, value] of Object.entries(data)) {
             store.set(key, value);
         }
-        win.webContents.send('pong', state);
+        win.webContents.send('pong', state); //Send the settings back to the main window
     });
 
     ipcMain.on('get-settings', (event) => {

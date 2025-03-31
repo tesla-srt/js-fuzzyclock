@@ -26,19 +26,6 @@ window.electron.onPong(message => {
   }
 })
 
-// ipcRenderer.on('pong', (event, message) => {
-//   if (fuzzyness != message) {
-//     fuzzyness = message
-//     updateTime(fuzzyness)
-//   }
-// })
-
-// document.addEventListener('mousedown', (e) => {
-//   if (e.target.tagName !== 'BUTTON') {
-//     ipcRenderer.send('drag-window')
-//   }
-// })
-
 console.log('Renderer script loaded');
 
 // Function to apply settings to the UI
